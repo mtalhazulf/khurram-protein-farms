@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@theme {
+  --color-kp-green-900: #0f2419;
+  --color-kp-green-800: #1b4332;
+  --color-kp-green-700: #2d6a4f;
+  --color-kp-green-100: #e8f0eb;
+
+  --color-kp-gold-500: #d4a636;
+  --color-kp-gold-400: #e0b84a;
+  --color-kp-gold-100: #fdf6e3;
+
+  --color-kp-white: #fafaf5;
+  --color-kp-black: #1a1a18;
+
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+html,
+body {
+  background-color: var(--color-kp-white);
+  color: var(--color-kp-black);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+}
+
+/* Diagonal stripe hero pattern */
+.kp-hero-pattern {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 60px,
+    rgba(212, 166, 54, 0.04) 60px,
+    rgba(212, 166, 54, 0.04) 120px
+  );
+}
+
+/* Prose styling for markdown content */
+.kp-prose {
+  color: var(--color-kp-black);
+  line-height: 1.75;
+  max-width: 70ch;
+}
+.kp-prose h1,
+.kp-prose h2,
+.kp-prose h3 {
+  color: var(--color-kp-green-800);
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+  line-height: 1.2;
+}
+.kp-prose h1 {
+  font-size: 2.25rem;
+}
+.kp-prose h2 {
+  font-size: 1.75rem;
+}
+.kp-prose h3 {
+  font-size: 1.35rem;
+}
+.kp-prose p {
+  margin-bottom: 1.25em;
+}
+.kp-prose a {
+  color: var(--color-kp-green-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.kp-prose ul,
+.kp-prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.kp-prose ul {
+  list-style: disc;
+}
+.kp-prose ol {
+  list-style: decimal;
+}
+.kp-prose blockquote {
+  border-left: 4px solid var(--color-kp-gold-500);
+  padding-left: 1rem;
+  font-style: italic;
+  color: #4b5d52;
+  margin: 1.5em 0;
+}
+.kp-prose img {
+  border-radius: 0.75rem;
+  margin: 1.5em 0;
+}
+.kp-prose code {
+  background: var(--color-kp-gold-100);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
