@@ -2,7 +2,8 @@
 
 Premium portfolio site for **Khurram Proteins** — a poultry farming and
 wholesale egg supply business based in Lahore, Pakistan (founded 1983).
-Built as a Next.js 16 app running entirely on Cloudflare (D1 + R2 + Pages).
+Built as a Next.js 16 app running entirely on Cloudflare Workers
+(with D1, R2 and KV bindings).
 
 ## Stack
 
@@ -13,8 +14,9 @@ Built as a Next.js 16 app running entirely on Cloudflare (D1 + R2 + Pages).
 | Database | Cloudflare D1 (SQLite) |
 | Image storage | Cloudflare R2 |
 | Auth | D1-backed sessions + bcrypt |
-| Runtime / package manager | [Bun](https://bun.sh) |
-| Deployment | Cloudflare Pages via `@opennextjs/cloudflare` |
+| Dev runtime / package manager | [Bun](https://bun.sh) |
+| Production runtime | Cloudflare Workers (with static assets) |
+| Deploy tool | Wrangler, driven by `@opennextjs/cloudflare` |
 
 Zero external dependencies beyond Cloudflare's free tier.
 
