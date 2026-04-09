@@ -7,13 +7,13 @@ export function Footer({ settings }: { settings: SiteSettingsMap }) {
     <footer className="bg-kp-green-900 text-white/80">
       <div className="mx-auto max-w-7xl px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold">
-              KP
-            </span>
-            <span className="font-serif text-lg uppercase tracking-wide text-white">
-              Khurram Proteins
-            </span>
+          <div className="mb-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="Khurram Proteins"
+              className="h-12 w-auto"
+            />
           </div>
           <p className="text-sm leading-relaxed">
             {settings.footer_text ??

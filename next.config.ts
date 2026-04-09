@@ -22,8 +22,58 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "10mb",
     },
   },
-  // R2 objects may be large; disable body size cap on server actions via the
-  // experimental option above. Everything else uses defaults.
+  headers: async () => [
+    {
+      // Static assets (JS, CSS, fonts) — immutable, cached 1 year
+      source: "/_next/static/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+    },
+    {
+      // Font files — immutable, cached 1 year
+      source: "/:path*.woff2",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+    },
+    {
+      // Public pages — stale-while-revalidate for fast loads
+      source: "/((?!admin|api).*)",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, s-maxage=60, stale-while-revalidate=300",
+        },
+      ],
+    },
+    {
+      // Image API — cached 1 year (content-addressed)
+      source: "/api/images/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "public, max-age=31536000, immutable",
+        },
+      ],
+    },
+    {
+      // Admin pages — no caching
+      source: "/admin/:path*",
+      headers: [
+        {
+          key: "Cache-Control",
+          value: "private, no-cache, no-store",
+        },
+      ],
+    },
+  ],
 };
 
 export default nextConfig;

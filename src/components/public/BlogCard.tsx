@@ -1,8 +1,16 @@
 import Link from "next/link";
 import type { BlogPost } from "@/types";
 import { formatDate, truncate } from "@/lib/utils";
+import { Clock } from "lucide-react";
+
+function estimateReadTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
+}
 
 export function BlogCard({ post }: { post: BlogPost }) {
+  const readTime = estimateReadTime(post.content);
+
   return (
     <article className="group overflow-hidden rounded-2xl border border-kp-green-100 bg-white transition-all hover:shadow-lg hover:border-kp-gold-500/40">
       <Link href={`/blog/${post.slug}`} className="block">
@@ -22,9 +30,16 @@ export function BlogCard({ post }: { post: BlogPost }) {
           )}
         </div>
         <div className="p-6">
-          <p className="text-xs uppercase tracking-widest text-kp-gold-500 mb-3 font-medium">
-            {formatDate(post.published_at ?? post.created_at)}
-          </p>
+          <div className="flex items-center gap-3 text-xs text-kp-black/50 mb-3">
+            <span className="uppercase tracking-widest text-kp-gold-500 font-medium">
+              {formatDate(post.published_at ?? post.created_at)}
+            </span>
+            <span className="text-kp-black/20">|</span>
+            <span className="inline-flex items-center gap-1">
+              <Clock className="h-3 w-3" />
+              {readTime} min read
+            </span>
+          </div>
           <h3 className="font-serif text-xl text-kp-green-900 mb-3 group-hover:text-kp-green-700 transition-colors">
             {post.title}
           </h3>

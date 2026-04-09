@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -15,7 +15,7 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Navbar() {
+export function Navbar({ phone }: { phone?: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -27,12 +27,15 @@ export function Navbar() {
   return (
     <header className="bg-kp-green-800 text-white">
       <nav className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold text-lg group-hover:bg-kp-gold-400 transition-colors">
+        <Link href="/" className="flex items-center gap-3 group shrink-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Khurram Proteins"
+            className="h-10 w-auto hidden sm:block"
+          />
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold text-lg group-hover:bg-kp-gold-400 transition-colors sm:hidden">
             KP
-          </span>
-          <span className="font-serif text-lg tracking-wide uppercase hidden sm:inline">
-            Khurram Proteins
           </span>
         </Link>
 
@@ -56,6 +59,15 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
+          {phone && (
+            <a
+              href={`tel:${phone}`}
+              className="hidden lg:inline-flex items-center gap-2 text-sm text-white/80 hover:text-kp-gold-400 transition-colors"
+            >
+              <Phone className="h-3.5 w-3.5" />
+              {phone}
+            </a>
+          )}
           <Link
             href="/contact"
             className="hidden sm:inline-flex rounded-full bg-kp-gold-500 px-5 py-2.5 text-sm font-medium text-kp-green-900 hover:bg-kp-gold-400 transition-colors"
@@ -121,7 +133,16 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="px-4 py-6 border-t border-white/10">
+        <div className="px-4 py-6 border-t border-white/10 space-y-3">
+          {phone && (
+            <a
+              href={`tel:${phone}`}
+              className="flex items-center justify-center gap-2 rounded-full border border-white/20 px-5 py-3 text-sm text-white hover:bg-white/10 transition-colors"
+            >
+              <Phone className="h-4 w-4" />
+              {phone}
+            </a>
+          )}
           <Link
             href="/contact"
             onClick={() => setOpen(false)}

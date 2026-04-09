@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { Hero } from "@/components/public/Hero";
 import { ServiceCard } from "@/components/public/ServiceCard";
+import { StatsBar } from "@/components/public/StatsBar";
 import { GalleryGrid } from "@/components/public/GalleryGrid";
 import { BlogCard } from "@/components/public/BlogCard";
 import { CTABand } from "@/components/public/CTABand";
+import { Testimonials } from "@/components/public/Testimonials";
+import { QualityBadges } from "@/components/public/QualityBadges";
 import {
   getSiteSettings,
   getActiveServices,
@@ -15,6 +18,75 @@ import { ArrowRight } from "lucide-react";
 
 export const revalidate = 60;
 
+const FALLBACK_SERVICES = [
+  {
+    id: 1,
+    title: "Wholesale Supply",
+    description:
+      "Bulk egg orders for restaurants, cafes, bakeries and supermarkets at competitive wholesale rates.",
+    icon_name: "egg",
+    display_order: 1,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: 2,
+    title: "Reliable Delivery",
+    description:
+      "Consistent on-time delivery across the Lahore region and beyond, seven days a week.",
+    icon_name: "truck",
+    display_order: 2,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: 3,
+    title: "Quality Assured",
+    description:
+      "Every batch monitored and tested to meet agricultural quality and food safety standards.",
+    icon_name: "shield-check",
+    display_order: 3,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: 4,
+    title: "Cold Chain Storage",
+    description:
+      "Temperature-controlled storage facilities ensuring freshness from farm to your kitchen.",
+    icon_name: "thermometer",
+    display_order: 4,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: 5,
+    title: "Long-term Partnerships",
+    description:
+      "Dedicated account management and flexible contracts built for lasting business relationships.",
+    icon_name: "handshake",
+    display_order: 5,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+  {
+    id: 6,
+    title: "Sustainable Farming",
+    description:
+      "Eco-friendly practices across our operations — responsible farming for a better future.",
+    icon_name: "leaf",
+    display_order: 6,
+    is_active: 1,
+    created_at: "",
+    updated_at: "",
+  },
+];
+
 export default async function HomePage() {
   const [settings, services, about, galleryPreview, posts] = await Promise.all([
     getSiteSettings(),
@@ -23,6 +95,8 @@ export default async function HomePage() {
     getGalleryPreview(4),
     getPublishedPosts(3),
   ]);
+
+  const displayServices = services.length > 0 ? services : FALLBACK_SERVICES;
 
   return (
     <>
@@ -35,6 +109,9 @@ export default async function HomePage() {
         ctaText={settings.hero_cta_text ?? "Discover more"}
       />
 
+      {/* Stats bar */}
+      <StatsBar />
+
       {/* Services strip */}
       <section className="bg-kp-white py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
@@ -46,47 +123,16 @@ export default async function HomePage() {
               Built around your business
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {services.length === 0
-              ? [
-                  {
-                    id: 1,
-                    title: "Wholesale Supply",
-                    description:
-                      "Bulk egg orders for restaurants, cafes, bakeries and supermarkets at competitive rates.",
-                    icon_name: "egg",
-                    display_order: 1,
-                    is_active: 1,
-                    created_at: "",
-                    updated_at: "",
-                  },
-                  {
-                    id: 2,
-                    title: "Reliable Delivery",
-                    description:
-                      "Consistent on-time delivery across the Lahore region and beyond.",
-                    icon_name: "truck",
-                    display_order: 2,
-                    is_active: 1,
-                    created_at: "",
-                    updated_at: "",
-                  },
-                  {
-                    id: 3,
-                    title: "Quality Assured",
-                    description:
-                      "Every batch monitored and tested to meet agricultural quality standards.",
-                    icon_name: "shield-check",
-                    display_order: 3,
-                    is_active: 1,
-                    created_at: "",
-                    updated_at: "",
-                  },
-                ].map((s) => <ServiceCard key={s.id} service={s} />)
-              : services.map((s) => <ServiceCard key={s.id} service={s} />)}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayServices.map((s) => (
+              <ServiceCard key={s.id} service={s} />
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Quality badges */}
+      <QualityBadges />
 
       {/* About preview */}
       <section className="bg-kp-green-100/40 py-20 md:py-28">
@@ -117,12 +163,14 @@ export default async function HomePage() {
               <strong className="text-kp-green-900">
                 {about?.founder_name ?? "Dr. Malik Khurram Shahzad Khokhar"}
               </strong>
-              , Khurram Proteins has built its reputation on consistency,
-              quality and long-term partnerships.
+              , Khurram Proteins has grown from a single farm to one of
+              Lahore&apos;s most trusted wholesale egg suppliers — built on
+              consistency, quality and long-term partnerships that span
+              generations.
             </p>
             <p className="text-kp-black/75 mb-8 leading-relaxed">
               {about?.short_bio ??
-                "Committed to providing premium quality products at fair wholesale prices."}
+                "Committed to providing premium quality products at fair wholesale prices, serving 500+ businesses across Pakistan."}
             </p>
             <Link
               href="/about"
@@ -134,6 +182,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* Gallery preview */}
       <section className="bg-kp-white py-20 md:py-28">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getGalleryImages } from "@/lib/db";
+import { GalleryLightbox } from "@/components/public/GalleryLightbox";
 
 export const revalidate = 120;
 
@@ -70,22 +71,7 @@ export default async function GalleryPage({
               No images uploaded yet for this category.
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {images.map((img) => (
-                <figure
-                  key={img.id}
-                  className="aspect-square rounded-xl overflow-hidden bg-kp-green-100 group"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.image_url}
-                    alt={img.alt_text || "Khurram Proteins"}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </figure>
-              ))}
-            </div>
+            <GalleryLightbox images={images} />
           )}
         </div>
       </section>
