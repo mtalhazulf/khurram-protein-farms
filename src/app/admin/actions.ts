@@ -326,7 +326,10 @@ export async function deleteContact(id: number, _formData?: FormData) {
 
 function extractR2Key(url: string | null): string | null {
   if (!url) return null;
-  // Best-effort: extract the path segment after the public base URL
+  // Handle /api/images/folder/file format
+  const apiMatch = url.match(/^\/api\/images\/(.+)$/);
+  if (apiMatch) return apiMatch[1];
+  // Handle legacy full-URL format
   const match = url.match(
     /https?:\/\/[^/]+\/(gallery|blog|about|misc)\/[^/]+$/
   );

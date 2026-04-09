@@ -1,5 +1,6 @@
 import { getSiteSettings } from "@/lib/db";
 import { updateSiteSettings } from "@/app/admin/actions";
+import { SubmitButton } from "@/components/admin/SubmitButton";
 
 export const dynamic = "force-dynamic";
 
@@ -63,12 +64,7 @@ export default async function SiteSettingsPage() {
         ))}
 
         <div className="pt-4">
-          <button
-            type="submit"
-            className="rounded-full bg-kp-green-800 px-8 py-3 text-sm font-medium text-white hover:bg-kp-green-700 transition-colors"
-          >
-            Save changes
-          </button>
+          <SubmitButton pendingText="Saving…">Save changes</SubmitButton>
         </div>
       </form>
     </div>

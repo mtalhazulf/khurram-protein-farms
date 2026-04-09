@@ -9,7 +9,7 @@ assets = { directory = ".open-next/assets", binding = "ASSETS" }
 [[d1_databases]]
 binding = "DB"
 database_name = "khurram-proteins-db"
-database_id = "<FILL_AFTER_CREATION>"
+database_id = "9cf42922-9a15-40f5-97f5-6185e064a0a7"
 migrations_dir = "migrations"
 
 [[r2_buckets]]
@@ -18,7 +18,7 @@ bucket_name = "khurram-proteins-images"
 
 [[kv_namespaces]]
 binding = "NEXT_INC_CACHE_KV"
-id = "<FILL_AFTER_CREATION>"
+id = "77ed7db56d0f42cfbf3959fb4038cd03"
 
 [vars]
-R2_PUBLIC_URL = "https://images.khurramproteins.com"
+R2_PUBLIC_URL = "https://pub-6132f6b6ea2c4d4f9ee0438e1116fa50.r2.dev"

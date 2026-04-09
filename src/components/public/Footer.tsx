@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { SiteSettingsMap } from "@/types";
+import { AdminShortcut } from "./AdminShortcut";
 
 export function Footer({ settings }: { settings: SiteSettingsMap }) {
   return (
     <footer className="bg-kp-green-900 text-white/80">
-      <div className="mx-auto max-w-7xl px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="mx-auto max-w-7xl px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-3 mb-4">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold">
@@ -91,6 +92,7 @@ export function Footer({ settings }: { settings: SiteSettingsMap }) {
 
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-6 text-xs text-white/60">
+          <AdminShortcut />
           © {new Date().getFullYear()} Khurram Proteins. All rights reserved.
         </div>
       </div>

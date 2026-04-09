@@ -11,9 +11,11 @@ export default async function DashboardLayout({
   if (!admin) redirect("/admin/login");
 
   return (
-    <div className="flex min-h-screen bg-kp-white">
+    <div className="min-h-screen bg-kp-white">
       <Sidebar email={admin.email} />
-      <main className="flex-1 p-8 md:p-10 overflow-x-auto">{children}</main>
+      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen">
+        <div className="p-6 md:p-8 lg:p-10 overflow-x-auto">{children}</div>
+      </main>
     </div>
   );
 }

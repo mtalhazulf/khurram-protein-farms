@@ -35,8 +35,7 @@ export async function uploadToR2(
     },
   });
 
-  const base = await getR2PublicUrl();
-  return { key, url: `${base}/${key}` };
+  return { key, url: `/api/images/${key}` };
 }
 
 export async function deleteFromR2(key: string): Promise<void> {

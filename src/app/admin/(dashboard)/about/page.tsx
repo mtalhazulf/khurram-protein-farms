@@ -1,5 +1,7 @@
 import { getAboutContent } from "@/lib/db";
 import { updateAbout } from "@/app/admin/actions";
+import { SubmitButton } from "@/components/admin/SubmitButton";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +19,7 @@ export default async function AdminAboutPage() {
         </p>
       </header>
 
-      <form action={updateAbout} className="space-y-6" encType="multipart/form-data">
+      <form action={updateAbout} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium mb-2">Founder name</label>
@@ -38,30 +40,12 @@ export default async function AdminAboutPage() {
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            Founder image
-          </label>
-          {about?.founder_image_url && (
-            <div className="mb-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={about.founder_image_url}
-                alt="Current founder"
-                className="h-32 w-32 rounded-lg object-cover border border-kp-green-100"
-              />
-            </div>
-          )}
-          <input
-            name="founder_image"
-            type="file"
-            accept="image/*"
-            className="text-sm"
-          />
-          <p className="text-xs text-kp-black/50 mt-1">
-            Leave empty to keep the current image.
-          </p>
-        </div>
+        <ImageUpload
+          name="founder_image"
+          label="Founder image"
+          currentUrl={about?.founder_image_url}
+          hint="Leave empty to keep the current image."
+        />
 
         <div>
           <label className="block text-sm font-medium mb-2">Short bio</label>
@@ -103,12 +87,7 @@ export default async function AdminAboutPage() {
           </p>
         </div>
 
-        <button
-          type="submit"
-          className="rounded-full bg-kp-green-800 px-8 py-3 text-sm font-medium text-white hover:bg-kp-green-700"
-        >
-          Save changes
-        </button>
+        <SubmitButton pendingText="Saving…">Save changes</SubmitButton>
       </form>
     </div>
   );

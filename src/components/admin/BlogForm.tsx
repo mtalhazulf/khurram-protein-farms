@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { slugify } from "@/lib/utils";
 import type { BlogPost } from "@/types";
+import { ImageUpload } from "./ImageUpload";
+import { SubmitButton } from "./SubmitButton";
 
 export function BlogForm({
   post,
@@ -16,7 +18,7 @@ export function BlogForm({
   const [slugTouched, setSlugTouched] = useState(Boolean(post?.slug));
 
   return (
-    <form action={action} encType="multipart/form-data" className="space-y-6">
+    <form action={action} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4">
         <div>
           <label className="block text-sm font-medium mb-2">Title</label>
@@ -59,25 +61,12 @@ export function BlogForm({
         </p>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-2">Cover image</label>
-        {post?.cover_image_url && (
-          <div className="mb-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={post.cover_image_url}
-              alt=""
-              className="h-32 rounded-lg object-cover border border-kp-green-100"
-            />
-          </div>
-        )}
-        <input name="cover_image" type="file" accept="image/*" className="text-sm" />
-        {post?.cover_image_url && (
-          <p className="text-xs text-kp-black/50 mt-1">
-            Leave empty to keep the current image.
-          </p>
-        )}
-      </div>
+      <ImageUpload
+        name="cover_image"
+        label="Cover image"
+        currentUrl={post?.cover_image_url}
+        hint={post?.cover_image_url ? "Leave empty to keep the current image." : undefined}
+      />
 
       <div>
         <label className="block text-sm font-medium mb-2">
@@ -104,12 +93,9 @@ export function BlogForm({
       </div>
 
       <div className="flex items-center gap-3">
-        <button
-          type="submit"
-          className="rounded-full bg-kp-green-800 px-8 py-3 text-sm font-medium text-white hover:bg-kp-green-700"
-        >
+        <SubmitButton pendingText={post ? "Saving…" : "Creating…"}>
           {post ? "Save changes" : "Create post"}
-        </button>
+        </SubmitButton>
       </div>
     </form>
   );

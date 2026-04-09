@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Settings,
@@ -11,6 +12,8 @@ import {
   User,
   Inbox,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -26,15 +29,21 @@ const items = [
 
 export function Sidebar({ email }: { email: string }) {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/admin/login";
   }
 
-  return (
-    <aside className="w-64 shrink-0 bg-kp-green-900 text-white flex flex-col min-h-screen">
-      <div className="px-6 py-6 border-b border-white/10">
+  const sidebarContent = (
+    <>
+      <div className="px-6 py-6 border-b border-white/10 flex items-center justify-between">
         <Link href="/admin" className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold">
             KP
@@ -43,9 +52,18 @@ export function Sidebar({ email }: { email: string }) {
             Admin
           </span>
         </Link>
+        {/* Close button on mobile */}
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          className="lg:hidden flex items-center justify-center h-8 w-8 rounded-lg hover:bg-white/10 transition-colors"
+          aria-label="Close sidebar"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
-      <nav className="flex-1 px-3 py-6 space-y-1">
+      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
         {items.map((item) => {
           const Icon = item.icon;
           const active = item.exact
@@ -80,6 +98,49 @@ export function Sidebar({ email }: { email: string }) {
           Sign out
         </button>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile topbar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-kp-green-900 text-white px-4 py-3 flex items-center justify-between border-b border-white/10">
+        <Link href="/admin" className="flex items-center gap-3">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold text-sm">
+            KP
+          </span>
+          <span className="font-serif text-sm uppercase tracking-wide">
+            Admin
+          </span>
+        </Link>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="flex items-center justify-center h-10 w-10 rounded-lg hover:bg-white/10 transition-colors"
+          aria-label="Open sidebar"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
+
+      {/* Mobile overlay */}
+      {open && (
+        <div
+          className="lg:hidden fixed inset-0 z-40 bg-black/50"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {/* Sidebar — fixed on desktop, slide-over on mobile */}
+      <aside
+        className={cn(
+          "fixed top-0 left-0 z-50 h-screen w-64 bg-kp-green-900 text-white flex flex-col transition-transform duration-200",
+          "lg:translate-x-0",
+          open ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {sidebarContent}
+      </aside>
+    </>
   );
 }

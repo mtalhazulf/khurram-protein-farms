@@ -1,5 +1,8 @@
 import { getGalleryImages } from "@/lib/db";
 import { uploadGalleryImage, deleteGalleryImage } from "@/app/admin/actions";
+import { SubmitButton } from "@/components/admin/SubmitButton";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 export const dynamic = "force-dynamic";
 
@@ -23,58 +26,49 @@ export default async function AdminGalleryPage() {
         </h2>
         <form
           action={uploadGalleryImage}
-          encType="multipart/form-data"
-          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+          className="space-y-4"
         >
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2">File</label>
-            <input
-              name="file"
-              type="file"
-              accept="image/*"
-              required
-              className="text-sm"
-            />
+          <ImageUpload name="file" label="Image file" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2">Alt text</label>
+              <input
+                name="alt_text"
+                className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">Category</label>
+              <select
+                name="category"
+                defaultValue="general"
+                className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
+              >
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c.charAt(0).toUpperCase() + c.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Display order
+              </label>
+              <input
+                name="display_order"
+                type="number"
+                defaultValue={0}
+                className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Alt text</label>
-            <input
-              name="alt_text"
-              className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Category</label>
-            <select
-              name="category"
-              defaultValue="general"
-              className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-            >
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              Display order
-            </label>
-            <input
-              name="display_order"
-              type="number"
-              defaultValue={0}
-              className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-            />
-          </div>
-          <div className="md:col-span-2 pt-2">
-            <button
-              type="submit"
-              className="rounded-full bg-kp-green-800 px-6 py-2.5 text-sm font-medium text-white hover:bg-kp-green-700"
-            >
+
+          <div className="pt-2">
+            <SubmitButton pendingText="Uploading…" className="px-6 py-2.5">
               Upload
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </section>
@@ -106,14 +100,10 @@ export default async function AdminGalleryPage() {
                   <p className="text-kp-black/50 uppercase tracking-wider mb-3">
                     {img.category}
                   </p>
-                  <form action={deleteGalleryImage.bind(null, img.id)}>
-                    <button
-                      type="submit"
-                      className="w-full rounded-full border border-red-200 text-red-600 py-1.5 text-xs font-medium hover:bg-red-50"
-                    >
-                      Delete
-                    </button>
-                  </form>
+                  <DeleteButton
+                    action={deleteGalleryImage.bind(null, img.id)}
+                    className="w-full justify-center py-1.5 text-xs"
+                  />
                 </div>
               </div>
             ))}

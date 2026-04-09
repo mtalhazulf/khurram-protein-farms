@@ -1,6 +1,8 @@
 import { getContactSubmissions } from "@/lib/db";
 import { deleteContact, markContactRead } from "@/app/admin/actions";
 import { formatDateShort } from "@/lib/utils";
+import { SubmitButton } from "@/components/admin/SubmitButton";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +45,7 @@ export default async function AdminContactsPage() {
                     {c.email}
                   </a>
                 </div>
-                <span className="text-xs text-kp-black/50">
+                <span className="text-xs text-kp-black/50 shrink-0">
                   {formatDateShort(c.created_at)}
                 </span>
               </div>
@@ -53,22 +55,15 @@ export default async function AdminContactsPage() {
               <div className="flex items-center gap-3">
                 {!c.is_read && (
                   <form action={markContactRead.bind(null, c.id)}>
-                    <button
-                      type="submit"
-                      className="rounded-full bg-kp-green-800 px-4 py-1.5 text-xs font-medium text-white hover:bg-kp-green-700"
+                    <SubmitButton
+                      pendingText="Marking…"
+                      className="px-4 py-1.5 text-xs"
                     >
                       Mark as read
-                    </button>
+                    </SubmitButton>
                   </form>
                 )}
-                <form action={deleteContact.bind(null, c.id)}>
-                  <button
-                    type="submit"
-                    className="rounded-full border border-red-200 text-red-600 px-4 py-1.5 text-xs font-medium hover:bg-red-50"
-                  >
-                    Delete
-                  </button>
-                </form>
+                <DeleteButton action={deleteContact.bind(null, c.id)} className="px-4 py-1.5 text-xs" />
               </div>
             </li>
           ))}

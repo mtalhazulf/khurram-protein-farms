@@ -4,6 +4,8 @@ import {
   updateService,
   deleteService,
 } from "@/app/admin/actions";
+import { SubmitButton } from "@/components/admin/SubmitButton";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -71,12 +73,9 @@ export default async function AdminServicesPage() {
             </label>
           </div>
           <div className="md:col-span-2 pt-2">
-            <button
-              type="submit"
-              className="rounded-full bg-kp-green-800 px-6 py-2.5 text-sm font-medium text-white hover:bg-kp-green-700"
-            >
+            <SubmitButton pendingText="Adding…" className="px-6 py-2.5">
               Add service
-            </button>
+            </SubmitButton>
           </div>
         </form>
       </section>
@@ -89,83 +88,79 @@ export default async function AdminServicesPage() {
           </p>
         ) : (
           services.map((service) => (
-            <form
+            <div
               key={service.id}
-              action={updateService.bind(null, service.id)}
               className="bg-white rounded-2xl border border-kp-green-100 p-6"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-xs font-medium text-kp-black/60 mb-1">
-                    Title
-                  </label>
-                  <input
-                    name="title"
-                    defaultValue={service.title}
-                    required
-                    className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-kp-black/60 mb-1">
-                    Icon name
-                  </label>
-                  <input
-                    name="icon_name"
-                    defaultValue={service.icon_name ?? ""}
-                    className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-xs font-medium text-kp-black/60 mb-1">
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    defaultValue={service.description}
-                    rows={3}
-                    required
-                    className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none resize-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-kp-black/60 mb-1">
-                    Display order
-                  </label>
-                  <input
-                    name="display_order"
-                    type="number"
-                    defaultValue={service.display_order}
-                    className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
-                  />
-                </div>
-                <div className="flex items-end">
-                  <label className="inline-flex items-center gap-2 text-sm">
+              <form
+                action={updateService.bind(null, service.id)}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-xs font-medium text-kp-black/60 mb-1">
+                      Title
+                    </label>
                     <input
-                      name="is_active"
-                      type="checkbox"
-                      defaultChecked={service.is_active === 1}
+                      name="title"
+                      defaultValue={service.title}
+                      required
+                      className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
                     />
-                    Active
-                  </label>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-kp-black/60 mb-1">
+                      Icon name
+                    </label>
+                    <input
+                      name="icon_name"
+                      defaultValue={service.icon_name ?? ""}
+                      className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-medium text-kp-black/60 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      name="description"
+                      defaultValue={service.description}
+                      rows={3}
+                      required
+                      className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none resize-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-kp-black/60 mb-1">
+                      Display order
+                    </label>
+                    <input
+                      name="display_order"
+                      type="number"
+                      defaultValue={service.display_order}
+                      className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-2.5 text-sm focus:border-kp-green-700 focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <label className="inline-flex items-center gap-2 text-sm">
+                      <input
+                        name="is_active"
+                        type="checkbox"
+                        defaultChecked={service.is_active === 1}
+                      />
+                      Active
+                    </label>
+                  </div>
                 </div>
+                <div className="flex items-center gap-3">
+                  <SubmitButton pendingText="Saving…" className="px-5 py-2">
+                    Save
+                  </SubmitButton>
+                </div>
+              </form>
+              <div className="mt-3 border-t border-kp-green-100 pt-3">
+                <DeleteButton action={deleteService.bind(null, service.id)} />
               </div>
-              <div className="flex items-center gap-3">
-                <button
-                  type="submit"
-                  className="rounded-full bg-kp-green-800 px-5 py-2 text-sm font-medium text-white hover:bg-kp-green-700"
-                >
-                  Save
-                </button>
-                <button
-                  type="submit"
-                  formAction={deleteService.bind(null, service.id)}
-                  className="rounded-full border border-red-200 text-red-600 px-5 py-2 text-sm font-medium hover:bg-red-50"
-                >
-                  Delete
-                </button>
-              </div>
-            </form>
+            </div>
           ))
         )}
       </section>

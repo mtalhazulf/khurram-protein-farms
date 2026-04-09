@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import { getAllPosts } from "@/lib/db";
 import { deleteBlogPost } from "@/app/admin/actions";
 import { formatDateShort } from "@/lib/utils";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,7 @@ export default async function AdminBlogListPage() {
 
   return (
     <div className="max-w-5xl">
-      <header className="mb-10 flex items-start justify-between gap-4">
+      <header className="mb-10 flex items-start justify-between gap-4 flex-wrap">
         <div>
           <h1 className="font-serif text-3xl text-kp-green-900 mb-1">Blog</h1>
           <p className="text-sm text-kp-black/60">
@@ -28,7 +29,16 @@ export default async function AdminBlogListPage() {
       </header>
 
       {posts.length === 0 ? (
-        <p className="text-center text-kp-black/60 py-10">No posts yet.</p>
+        <div className="text-center py-16">
+          <p className="text-kp-black/60 mb-4">No posts yet.</p>
+          <Link
+            href="/admin/blog/new"
+            className="inline-flex items-center gap-2 rounded-full bg-kp-green-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-kp-green-700"
+          >
+            <Plus className="h-4 w-4" />
+            Create your first post
+          </Link>
+        </div>
       ) : (
         <ul className="bg-white rounded-2xl border border-kp-green-100 divide-y divide-kp-green-100">
           {posts.map((post) => (
@@ -42,10 +52,10 @@ export default async function AdminBlogListPage() {
                   <img
                     src={post.cover_image_url}
                     alt=""
-                    className="h-14 w-20 object-cover rounded-md bg-kp-green-100 shrink-0"
+                    className="h-14 w-20 object-cover rounded-md bg-kp-green-100 shrink-0 hidden sm:block"
                   />
                 ) : (
-                  <div className="h-14 w-20 bg-kp-green-100 rounded-md shrink-0" />
+                  <div className="h-14 w-20 bg-kp-green-100 rounded-md shrink-0 hidden sm:block" />
                 )}
                 <div className="min-w-0">
                   <p className="font-medium text-kp-green-900 truncate">
@@ -58,7 +68,7 @@ export default async function AdminBlogListPage() {
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <span
-                  className={`text-xs px-2 py-1 rounded-full ${
+                  className={`text-xs px-2 py-1 rounded-full hidden sm:inline-block ${
                     post.is_published
                       ? "bg-kp-green-100 text-kp-green-800"
                       : "bg-kp-gold-100 text-kp-gold-500"
@@ -72,14 +82,10 @@ export default async function AdminBlogListPage() {
                 >
                   Edit
                 </Link>
-                <form action={deleteBlogPost.bind(null, post.id)}>
-                  <button
-                    type="submit"
-                    className="text-sm text-red-600 hover:text-red-700"
-                  >
-                    Delete
-                  </button>
-                </form>
+                <DeleteButton
+                  action={deleteBlogPost.bind(null, post.id)}
+                  className="px-3 py-1 text-xs"
+                />
               </div>
             </li>
           ))}
