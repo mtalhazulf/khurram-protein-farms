@@ -1,0 +1,9 @@
+# Bun configuration for Khurram Proteins
+
+[install]
+# Keep the lockfile in sync across contributors
+frozenLockfile = false
+
+# Tailwind v4, sharp, esbuild and workerd have postinstall scripts we need
+# to run. Individual packages are allow-listed in package.json
+# "trustedDependencies".
