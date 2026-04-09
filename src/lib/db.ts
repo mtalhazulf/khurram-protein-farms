@@ -8,10 +8,6 @@ import type {
   SiteSettingsMap,
 } from "@/types";
 
-/**
- * Returns the D1 database binding. Works in server components, API routes,
- * and server actions via the OpenNext Cloudflare adapter.
- */
 export async function getDB(): Promise<D1Database> {
   const { env } = await getCloudflareContext({ async: true });
   if (!env.DB) {

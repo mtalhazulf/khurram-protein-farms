@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { LoginForm } from "@/components/admin/LoginForm";
 
 export const metadata: Metadata = {
@@ -18,7 +19,9 @@ export default function AdminLoginPage() {
           <p className="text-white/60 text-sm">Admin panel</p>
         </div>
         <div className="bg-white text-kp-black rounded-2xl p-8 shadow-2xl">
-          <LoginForm />
+          <Suspense>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>
