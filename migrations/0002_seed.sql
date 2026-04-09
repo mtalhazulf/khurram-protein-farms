@@ -1,7 +1,7 @@
 -- Seed data for Khurram Proteins
 -- NOTE: Replace the admin password hash with a real bcrypt hash before deploying.
 -- The hash below is for the password "changeme" (bcrypt, 10 rounds).
--- Generate a new hash with: node -e "console.log(require('bcryptjs').hashSync('yourpassword', 10))"
+-- Generate a new hash with: bun run hash:password -- 'yourpassword'
 
 INSERT OR IGNORE INTO admin_users (email, password_hash) VALUES
   ('admin@khurramproteins.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
