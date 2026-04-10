@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { BlogPost } from "@/types";
 import { formatDate, truncate } from "@/lib/utils";
-import { Clock } from "lucide-react";
+import { Clock, ArrowUpRight } from "lucide-react";
 
 function estimateReadTime(content: string): number {
   const words = content.trim().split(/\s+/).length;
@@ -12,15 +12,15 @@ export function BlogCard({ post }: { post: BlogPost }) {
   const readTime = estimateReadTime(post.content);
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-kp-green-100 bg-white transition-all hover:shadow-lg hover:border-kp-gold-500/40">
+    <article className="kp-card group overflow-hidden rounded-2xl border border-kp-green-100 bg-white">
       <Link href={`/blog/${post.slug}`} className="block">
-        <div className="aspect-[16/10] overflow-hidden bg-kp-green-100">
+        <div className="aspect-16/10 overflow-hidden bg-kp-green-100 relative">
           {post.cover_image_url ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={post.cover_image_url}
               alt={post.title}
-              className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="h-full w-full object-cover transition-transform duration-600 group-hover:scale-105"
               loading="lazy"
             />
           ) : (
@@ -28,6 +28,12 @@ export function BlogCard({ post }: { post: BlogPost }) {
               No cover image
             </div>
           )}
+          {/* Hover overlay with arrow */}
+          <div className="absolute inset-0 bg-kp-green-900/0 group-hover:bg-kp-green-900/20 transition-colors duration-300 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-full bg-white/90 text-kp-green-900 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100 shadow-lg">
+              <ArrowUpRight className="h-4 w-4" />
+            </div>
+          </div>
         </div>
         <div className="p-6">
           <div className="flex items-center gap-3 text-xs text-kp-black/50 mb-3">
@@ -40,10 +46,10 @@ export function BlogCard({ post }: { post: BlogPost }) {
               {readTime} min read
             </span>
           </div>
-          <h3 className="font-serif text-xl text-kp-green-900 mb-3 group-hover:text-kp-green-700 transition-colors">
+          <h3 className="font-serif text-xl text-kp-green-900 mb-3 transition-colors duration-200 group-hover:text-kp-green-700">
             {post.title}
           </h3>
-          <p className="text-sm text-kp-black/70 leading-relaxed">
+          <p className="text-sm text-kp-black/65 leading-relaxed">
             {truncate(post.excerpt ?? "", 140)}
           </p>
         </div>

@@ -36,6 +36,12 @@ export function Sidebar({ email }: { email: string }) {
     setOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when mobile sidebar open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
     window.location.href = "/admin/login";
@@ -43,12 +49,15 @@ export function Sidebar({ email }: { email: string }) {
 
   const sidebarContent = (
     <>
-      <div className="px-6 py-6 border-b border-white/10 flex items-center justify-between">
-        <Link href="/admin" className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-kp-gold-500 text-kp-green-900 font-serif font-bold">
-            KP
-          </span>
-          <span className="font-serif text-sm uppercase tracking-wide">
+      <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+        <Link href="/admin" className="flex items-center gap-3 group">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="KP"
+            className="h-10 w-10 rounded-full object-cover bg-white p-0.5 transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="font-serif text-sm uppercase tracking-wide transition-colors duration-200 group-hover:text-kp-gold-400">
             Admin
           </span>
         </Link>
@@ -56,14 +65,14 @@ export function Sidebar({ email }: { email: string }) {
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="lg:hidden flex items-center justify-center h-8 w-8 rounded-lg hover:bg-white/10 transition-colors"
+          className="lg:hidden flex items-center justify-center h-8 w-8 rounded-lg hover:bg-white/10 active:bg-white/15 transition-colors"
           aria-label="Close sidebar"
         >
           <X className="h-5 w-5" />
         </button>
       </div>
 
-      <nav className="flex-1 px-3 py-6 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto">
         {items.map((item) => {
           const Icon = item.icon;
           const active = item.exact
@@ -74,25 +83,29 @@ export function Sidebar({ email }: { email: string }) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200 relative",
                 active
-                  ? "bg-kp-green-800 text-white"
-                  : "text-white/70 hover:bg-kp-green-800/50 hover:text-white"
+                  ? "bg-kp-green-800 text-white font-medium shadow-sm"
+                  : "text-white/65 hover:bg-kp-green-800/40 hover:text-white active:bg-kp-green-800/60"
               )}
             >
-              <Icon className="h-4 w-4" strokeWidth={1.75} />
+              {/* Active indicator bar */}
+              {active && (
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-kp-gold-500 rounded-r-full" />
+              )}
+              <Icon className="h-4 w-4 shrink-0" strokeWidth={1.75} />
               {item.label}
             </Link>
           );
         })}
       </nav>
 
-      <div className="px-4 py-4 border-t border-white/10 text-xs text-white/60">
-        <p className="mb-3 truncate">{email}</p>
+      <div className="px-4 py-4 border-t border-white/10">
+        <p className="text-xs text-white/45 mb-3 truncate px-1">{email}</p>
         <button
           type="button"
           onClick={handleLogout}
-          className="inline-flex items-center gap-2 text-white/80 hover:text-kp-gold-400 transition-colors"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-white/70 hover:text-kp-gold-400 hover:bg-white/5 transition-all duration-200 w-full"
         >
           <LogOut className="h-3.5 w-3.5" />
           Sign out
@@ -116,7 +129,7 @@ export function Sidebar({ email }: { email: string }) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="flex items-center justify-center h-10 w-10 rounded-lg hover:bg-white/10 transition-colors"
+          className="flex items-center justify-center h-10 w-10 rounded-lg hover:bg-white/10 active:bg-white/15 transition-colors"
           aria-label="Open sidebar"
         >
           <Menu className="h-5 w-5" />
@@ -124,19 +137,20 @@ export function Sidebar({ email }: { email: string }) {
       </div>
 
       {/* Mobile overlay */}
-      {open && (
-        <div
-          className="lg:hidden fixed inset-0 z-40 bg-black/50"
-          onClick={() => setOpen(false)}
-        />
-      )}
+      <div
+        className={cn(
+          "lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300",
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setOpen(false)}
+      />
 
       {/* Sidebar — fixed on desktop, slide-over on mobile */}
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 h-screen w-64 bg-kp-green-900 text-white flex flex-col transition-transform duration-200",
+          "fixed top-0 left-0 z-50 h-screen w-64 bg-kp-green-900 text-white flex flex-col transition-transform duration-300 ease-in-out",
           "lg:translate-x-0",
-          open ? "translate-x-0" : "-translate-x-full"
+          open ? "translate-x-0 shadow-2xl" : "-translate-x-full"
         )}
       >
         {sidebarContent}

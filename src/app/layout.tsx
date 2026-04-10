@@ -32,6 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       s.meta_description ??
       "Premium poultry farming and wholesale egg supply serving businesses across Pakistan since 1983.",
+    icons: {
+      icon: "/logo.png",
+      apple: "/logo.png",
+    },
     openGraph: {
       title: s.meta_title ?? "Khurram Proteins",
       description: s.meta_description ?? "",

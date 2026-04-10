@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { LogIn, AlertCircle } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -45,7 +46,7 @@ export function LoginForm() {
       <h2 className="font-serif text-xl text-kp-green-900 mb-2">Sign in</h2>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-2">
+        <label htmlFor="email" className="block text-sm font-medium mb-2 text-kp-green-900">
           Email
         </label>
         <input
@@ -54,12 +55,13 @@ export function LoginForm() {
           type="email"
           required
           autoComplete="email"
-          className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-3 text-sm focus:border-kp-green-700 focus:outline-none focus:ring-2 focus:ring-kp-green-700/20"
+          placeholder="admin@khurramproteins.com"
+          className="kp-input"
         />
       </div>
 
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-2">
+        <label htmlFor="password" className="block text-sm font-medium mb-2 text-kp-green-900">
           Password
         </label>
         <input
@@ -68,18 +70,34 @@ export function LoginForm() {
           type="password"
           required
           autoComplete="current-password"
-          className="w-full rounded-lg border border-kp-green-100 bg-white px-4 py-3 text-sm focus:border-kp-green-700 focus:outline-none focus:ring-2 focus:ring-kp-green-700/20"
+          placeholder="Enter your password"
+          className="kp-input"
         />
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <div className="kp-animate-fade-up flex items-start gap-3 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700">
+          <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
+          <p>{error}</p>
+        </div>
+      )}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-full bg-kp-green-800 px-6 py-3.5 text-sm font-medium text-white hover:bg-kp-green-700 transition-colors disabled:opacity-60"
+        className="kp-btn kp-btn-green w-full justify-center disabled:opacity-60 disabled:pointer-events-none"
       >
-        {loading ? "Signing in…" : "Sign in"}
+        {loading ? (
+          <>
+            <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            Signing in...
+          </>
+        ) : (
+          <>
+            <LogIn className="h-4 w-4" />
+            Sign in
+          </>
+        )}
       </button>
     </form>
   );

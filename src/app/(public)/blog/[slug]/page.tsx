@@ -42,23 +42,23 @@ export default async function BlogPostPage({
 
   return (
     <article className="bg-kp-white">
-      <header className="bg-kp-green-800 text-white py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
+      <header className="kp-page-header pb-28! md:pb-32!">
+        <div className="relative mx-auto max-w-3xl px-6">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-kp-gold-400 text-sm mb-8 hover:text-kp-gold-500 transition-colors"
+            className="kp-link text-kp-gold-400! mb-8 inline-flex"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to blog
           </Link>
-          <p className="text-kp-gold-400 uppercase tracking-[0.3em] text-xs mb-4 font-medium">
+          <p className="kp-label text-kp-gold-400 kp-animate-fade-up">
             {formatDate(post.published_at ?? post.created_at)}
           </p>
-          <h1 className="font-serif text-4xl md:text-5xl mb-6 leading-tight">
+          <h1 className="font-serif text-4xl md:text-5xl mb-6 leading-tight kp-animate-fade-up kp-stagger-2">
             {post.title}
           </h1>
           {post.excerpt && (
-            <p className="text-white/80 text-lg leading-relaxed">
+            <p className="text-white/75 text-lg leading-relaxed kp-animate-fade-up kp-stagger-3">
               {post.excerpt}
             </p>
           )}
@@ -71,7 +71,7 @@ export default async function BlogPostPage({
           <img
             src={post.cover_image_url}
             alt={post.title}
-            className="w-full aspect-[16/9] object-cover rounded-2xl shadow-2xl"
+            className="w-full aspect-video object-cover rounded-2xl shadow-2xl"
           />
         </div>
       )}
@@ -81,6 +81,14 @@ export default async function BlogPostPage({
           className="kp-prose mx-auto"
           dangerouslySetInnerHTML={{ __html: html }}
         />
+
+        {/* Back link at bottom */}
+        <div className="mt-16 pt-8 border-t border-kp-green-100">
+          <Link href="/blog" className="kp-link">
+            <ArrowLeft className="h-4 w-4" />
+            Back to all posts
+          </Link>
+        </div>
       </div>
     </article>
   );

@@ -116,9 +116,7 @@ export default async function HomePage() {
       <section className="bg-kp-white py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <p className="text-kp-gold-500 uppercase tracking-[0.3em] text-xs mb-3 font-medium">
-              What we do
-            </p>
+            <p className="kp-label">What we do</p>
             <h2 className="font-serif text-3xl md:text-4xl text-kp-green-900">
               Built around your business
             </h2>
@@ -137,13 +135,13 @@ export default async function HomePage() {
       {/* About preview */}
       <section className="bg-kp-green-100/40 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
-          <div className="aspect-[4/5] rounded-3xl bg-kp-green-100 overflow-hidden shadow-xl">
+          <div className="aspect-4/5 rounded-3xl bg-kp-green-100 overflow-hidden shadow-xl group">
             {about?.founder_image_url ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={about.founder_image_url}
                 alt={about.founder_name}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
             ) : (
               <div className="h-full w-full flex items-center justify-center text-kp-green-700/50 text-sm">
@@ -152,13 +150,11 @@ export default async function HomePage() {
             )}
           </div>
           <div>
-            <p className="text-kp-gold-500 uppercase tracking-[0.3em] text-xs mb-3 font-medium">
-              Our story
-            </p>
+            <p className="kp-label">Our story</p>
             <h2 className="font-serif text-3xl md:text-4xl text-kp-green-900 mb-6 leading-tight">
               Four decades of trust in Pakistan&apos;s poultry industry
             </h2>
-            <p className="text-kp-black/75 mb-4 leading-relaxed">
+            <p className="text-kp-black/70 mb-4 leading-relaxed">
               Founded in 1983 and led by{" "}
               <strong className="text-kp-green-900">
                 {about?.founder_name ?? "Dr. Malik Khurram Shahzad Khokhar"}
@@ -168,14 +164,11 @@ export default async function HomePage() {
               consistency, quality and long-term partnerships that span
               generations.
             </p>
-            <p className="text-kp-black/75 mb-8 leading-relaxed">
+            <p className="text-kp-black/70 mb-8 leading-relaxed">
               {about?.short_bio ??
                 "Committed to providing premium quality products at fair wholesale prices, serving 500+ businesses across Pakistan."}
             </p>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 text-kp-green-800 font-medium text-sm hover:text-kp-gold-500 transition-colors"
-            >
+            <Link href="/about" className="kp-link">
               Read the full story
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -191,17 +184,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
             <div>
-              <p className="text-kp-gold-500 uppercase tracking-[0.3em] text-xs mb-3 font-medium">
-                Gallery
-              </p>
+              <p className="kp-label">Gallery</p>
               <h2 className="font-serif text-3xl md:text-4xl text-kp-green-900">
                 Inside our farm
               </h2>
             </div>
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 text-kp-green-800 font-medium text-sm hover:text-kp-gold-500 transition-colors"
-            >
+            <Link href="/gallery" className="kp-link">
               View all
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -219,17 +207,12 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
               <div>
-                <p className="text-kp-gold-500 uppercase tracking-[0.3em] text-xs mb-3 font-medium">
-                  Journal
-                </p>
+                <p className="kp-label">Journal</p>
                 <h2 className="font-serif text-3xl md:text-4xl text-kp-green-900">
                   Latest from the farm
                 </h2>
               </div>
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 text-kp-green-800 font-medium text-sm hover:text-kp-gold-500 transition-colors"
-              >
+              <Link href="/blog" className="kp-link">
                 All posts
                 <ArrowRight className="h-4 w-4" />
               </Link>

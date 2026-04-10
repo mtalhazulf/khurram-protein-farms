@@ -29,15 +29,15 @@ export default async function GalleryPage({
 
   return (
     <>
-      <section className="bg-kp-green-800 text-white py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 text-center">
-          <p className="text-kp-gold-400 uppercase tracking-[0.3em] text-xs mb-4 font-medium">
+      <section className="kp-page-header">
+        <div className="relative mx-auto max-w-7xl px-6 text-center">
+          <p className="kp-label text-kp-gold-400 kp-animate-fade-up">
             Gallery
           </p>
-          <h1 className="font-serif text-4xl md:text-5xl mb-6">
+          <h1 className="font-serif text-4xl md:text-5xl mb-6 kp-animate-fade-up kp-stagger-2">
             Life at the farm
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
+          <p className="text-white/75 max-w-2xl mx-auto text-lg leading-relaxed kp-animate-fade-up kp-stagger-3">
             A look at our facilities, our people, and the birds we care for
             every day.
           </p>
@@ -54,10 +54,10 @@ export default async function GalleryPage({
                 <Link
                   key={cat.id}
                   href={cat.id ? `/gallery?category=${cat.id}` : "/gallery"}
-                  className={`rounded-full px-5 py-2 text-sm font-medium transition-colors ${
+                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
                     active
-                      ? "bg-kp-green-800 text-white"
-                      : "bg-kp-green-100 text-kp-green-800 hover:bg-kp-green-100/70"
+                      ? "bg-kp-green-800 text-white shadow-md shadow-kp-green-900/15"
+                      : "bg-kp-green-100 text-kp-green-800 hover:bg-kp-green-100/70 hover:shadow-sm active:scale-95"
                   }`}
                 >
                   {cat.label}

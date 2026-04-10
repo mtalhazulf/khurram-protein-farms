@@ -79,8 +79,9 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 
 // Initialize OpenNext dev-time Cloudflare bindings when in dev
+// Use remote bindings so dev server shares the same D1/R2/KV as production
 if (process.env.NODE_ENV === "development") {
   import("@opennextjs/cloudflare").then(({ initOpenNextCloudflareForDev }) => {
-    initOpenNextCloudflareForDev();
+    initOpenNextCloudflareForDev({ remoteBindings: true });
   });
 }
